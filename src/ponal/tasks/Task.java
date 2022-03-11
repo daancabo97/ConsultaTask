@@ -11,42 +11,40 @@ import javax.sql.DataSource;
 import javax.swing.JOptionPane;
 import oracle.iam.platform.Platform;
 
-
 /**
  *
  * @author jusei
  */
 public class Task {
-    
-    
-    public static void main(String[] args) throws ClassNotFoundException , SQLException, InstantiationException, IllegalAccessException{
+
+    public static void main(String[] args) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
         try {
-            String user="UTOIM_OIM";
-            String pass="D3v01MDB";
-            String url="jdcb:oracle:thin:@10.12.31.74:1521/OCOIMUAT.DATABASE.TDECLNOPROD.ORACLEVCN.COM";
-            Connection connection=null;
-            
+            String user = "PRODOIM_OIM";
+            String pass = "PRD33z14";
+            String url = "jdcb:oracle:thin:@10.51.12.76:1521:EOIM3PD11";
+            Connection connection = null;
+
             System.out.println("- - - - - - - - -");
             try {
                 Class.forName("oracle.jdbc.OracleDriver");
-                connection=DriverManager.getConnection(url, user, pass);
-                JOptionPane.showMessageDialog(null,"Conexion realizada");
+                connection = DriverManager.getConnection(url, user, pass);
+                JOptionPane.showMessageDialog(null, "Conexion realizada");
                 System.out.println("Conexion exitosa");
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
-               
+
             //DataSource ds = Platform.getOperationalDS();
             //Connection connection = ds.getConnection();
+            
             Statement st = connection.createStatement();
             System.out.println("conectado");
+            ResultSet result = st.executeQuery("SELECT USR_LOGIN FROM USR WHERE USR_START_DATE >= USR_START_DATE - 5");//'13/01/15'");
 
-            ResultSet result = st.executeQuery("SELECT USR_LOGIN FROM USR WHERE USR_START_DATE >= '13/01/15';");
-            //int uloginIndex = result.findColumn("USR_LOGIN");
+            //int uloginIndex = result.findColumn("userLogin");
             while (result.next()) {
-                String userLogin = result.getString("USER_LOGIN");
-                System.out.println("USR_LOGIN: " + result.getString(user));
+                String userLogin = result.getString("USR_LOGIN");
+                System.out.println("USR_LOGIN: " + userLogin);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -55,4 +53,3 @@ public class Task {
 
     }
 }
-
