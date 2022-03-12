@@ -39,12 +39,13 @@ public class Task {
             
             Statement st = connection.createStatement();
             System.out.println("conectado");
-            ResultSet result = st.executeQuery("SELECT USR_LOGIN FROM USR WHERE USR_START_DATE >= USR_START_DATE - 5");//'13/01/15'");
+            ResultSet result = st.executeQuery("SELECT USR_START_DATE ,USR_LOGIN FROM USR WHERE USR_START_DATE >= USR_START_DATE - 5");
 
             //int uloginIndex = result.findColumn("userLogin");
             while (result.next()) {
                 String userLogin = result.getString("USR_LOGIN");
-                System.out.println("USR_LOGIN: " + userLogin);
+                String fecha = result.getString("USR_START_DATE");
+                System.out.println("USR_LOGIN: " + fecha + ' ' +userLogin);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
